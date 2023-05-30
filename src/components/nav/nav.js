@@ -1,25 +1,30 @@
-const Nav = () => {
+import { useState } from "react";
+
+const Nav = (props) => {
   return (
     <div className="nav">
-      <form>
+      {/* <form>
         <label for="user">Hiển thị</label>
-        <select id="user">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-          <option>6</option>
-          <option>7</option>
-          <option>8</option>
-          <option>9</option>
-          <option>10</option>
+        <select id="user" onSubmit={onSubmitRecord}>
+          {recordsPerPage.map((i) => {
+            return (
+              <div>
+                <option type="submit">{0}</option>
+                <option type="submit">{1}</option>
+                <option type="submit">{2}</option>
+                <option type="submit">{3}</option>
+                <option type="submit">{4}</option>
+              </div>
+            );
+          })}
         </select>
-      </form>
-      <form>
-        <label for="search">Search:</label>
-        <input id="search"></input>
-      </form>
+      </form> */}
+      {/* <form onSubmit={addSearch}>
+        <input
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search"
+        ></input>
+      </form> */}
     </div>
   );
 };

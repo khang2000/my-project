@@ -8,6 +8,10 @@ import EditUser from "../../components/editUser/EditUser";
 const Homepage = (props) => {
   const { users, onDeleteTodo } = props;
   const [isOpenModal, setOpenModal] = useState(false);
+  // SEARCH
+  const [search, setSearch] = useState("");
+
+  // UPDATE
   const [userDemo, setUserDemo] = useState();
   console.log("🚀 ~ file: Homepage.js:7 ~ Homepage ~ users:", users);
   const handleOpenModal = (user) => {
@@ -15,9 +19,14 @@ const Homepage = (props) => {
     setUserDemo(user);
     setOpenModal(!isOpenModal);
   };
-
+  // PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 3;
+
+  // const [recordsPerPage, setRecordsPerPage] = useState();
+  // const handleRecord = () => {
+  //   setRecordsPerPage(recordsPerPage.i);
+  // };
+  const [recordsPerPage, setRecordsPerPage] = useState("3");
   const lastIndex = currentPage * recordsPerPage;
   const fisrtIndex = lastIndex - recordsPerPage;
   const records = users.slice(fisrtIndex, lastIndex);
@@ -27,6 +36,33 @@ const Homepage = (props) => {
     <div>
       <div className="user">
         <Nav />
+        <div className="nav">
+          <form>
+            <label for="user">Hiển thị</label>
+            <select>
+              <option
+                onClick={(e) => setRecordsPerPage(e.target.value)}
+                value={1}
+              >
+                1
+              </option>
+              <option onChange={(e) => setRecordsPerPage(e.target.value)}>
+                2
+              </option>
+              <option onChange={(e) => setRecordsPerPage(e.target.value)}>
+                3
+              </option>
+            </select>
+          </form>
+
+          <form>
+            <input
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Tìm kiếm"
+            ></input>
+          </form>
+        </div>
+
         <table
           className={
             isOpenModal
@@ -35,16 +71,23 @@ const Homepage = (props) => {
           }
         >
           <HeaderTable />
-          {records.map((user, index) => {
-            return (
-              <Main
-                user={user}
-                index={index}
-                onDeleteTodo={onDeleteTodo}
-                handleOpenModal={handleOpenModal}
-              />
-            );
-          })}
+          {records
+            .filter((user) => {
+              return search.toLowerCase() === ""
+                ? user
+                : user.userName.toLowerCase().includes(search);
+            })
+            .map((user, index) => {
+              return (
+                // .splice(ar.indexOf('one'), 1)
+                <Main
+                  user={user}
+                  index={index}
+                  onDeleteTodo={onDeleteTodo}
+                  handleOpenModal={handleOpenModal}
+                />
+              );
+            })}
         </table>
         <nav>
           <ul className="pagination">
