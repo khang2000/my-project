@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const InputInfor = (props) => {
-  const { user, text, updateUser, onAddNewUser } = props;
+  const { user, text } = props;
   const [inputValues, setInputValues] = useState({
     userName: user ? user.userName : "",
     userId: user ? user.id : "", // if(user) user.userName else ""
@@ -21,7 +21,11 @@ const InputInfor = (props) => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    props.onAddNewUser(inputValues);
+    text && text.text === "Cập nhật"
+      ? props.updateUser(inputValues)
+      : props.onAddNewUser(inputValues);
+
+    // props.onAddNewUser(inputValues);
     // props.updateUser(inputValues);
     setInputValues({
       userName: "",

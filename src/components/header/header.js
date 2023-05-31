@@ -25,11 +25,6 @@ const Header = () => {
                   AddUser
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link active" to="#">
-                  AboutUs
-                </Link>
-              </li>
             </ul>
             <div className="log-out">
               <button

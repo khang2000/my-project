@@ -43,7 +43,7 @@ const Home = () => {
   return (
     <div>
       <div className="container mt-3">
-        <section className="d-flex justify-content-between">
+        <section className="d-flex justify-content-center">
           <div className="left-data mt-3" style={{ width: "100%" }}>
             <h3 className="text-center col-lg-6">Đăng ký</h3>
             <form>

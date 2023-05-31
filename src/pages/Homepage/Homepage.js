@@ -5,9 +5,12 @@ import Main from "../../components/main/main";
 import HeaderTable from "./HeaderTable";
 import EditUser from "../../components/editUser/EditUser";
 import Header from "../../components/header/header";
+import Home from "../../components/home/home";
 
 const Homepage = (props) => {
   const { users, onDeleteTodo, updateUser } = props;
+
+  // LOG IN- LOG OUT
   const [loginData, setLoginData] = useState([]);
   console.log(loginData);
   const todayDate = new Date().toISOString().slice(0, 10);
@@ -51,16 +54,28 @@ const Homepage = (props) => {
   // const handleRecord = () => {
   //   setRecordsPerPage(recordsPerPage.i);
   // };
-  const [recordsPerPage, setRecordsPerPage] = useState("6");
+  const [recordsPerPage, setRecordsPerPage] = useState("3");
   const lastIndex = currentPage * recordsPerPage;
   const fisrtIndex = lastIndex - recordsPerPage;
   const records = users.slice(fisrtIndex, lastIndex);
   const npage = Math.ceil(users.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
+  // show number of person
+  const option = [
+    { label: "1", value: 1 },
+    { label: "2", value: 2 },
+    { label: "3", value: 3 },
+    { label: "4", value: 4 },
+    { label: "5", value: 5 },
+    { label: "6", value: 6 },
+  ];
+  function handleSelect(e) {
+    setRecordsPerPage(e.target.value);
+  }
   return (
     <>
       {loginData.length === 0 ? (
-        "error"
+        <Home />
       ) : (
         <div>
           <Header />
@@ -70,19 +85,10 @@ const Homepage = (props) => {
             <div className="nav">
               <form>
                 <label for="user">Hiển thị</label>
-                <select>
-                  <option
-                    onClick={(e) => setRecordsPerPage(e.target.value)}
-                    value={1}
-                  >
-                    1
-                  </option>
-                  <option onChange={(e) => setRecordsPerPage(e.target.value)}>
-                    2
-                  </option>
-                  <option onChange={(e) => setRecordsPerPage(e.target.value)}>
-                    3
-                  </option>
+                <select onChange={handleSelect}>
+                  {option.map((option) => (
+                    <option value={option.value}>{option.label}</option>
+                  ))}
                 </select>
               </form>
 
