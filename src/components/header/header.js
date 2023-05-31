@@ -1,6 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
+  const history = useNavigate();
+  const userLogout = () => {
+    localStorage.removeItem("user_login");
+    history("/home");
+  };
+
   return (
     <div>
       <div className="log-in"></div>
@@ -24,6 +31,14 @@ const Header = () => {
                 </Link>
               </li>
             </ul>
+            <div className="log-out">
+              <button
+                onClick={userLogout}
+                className="nav-link active btn-logout"
+              >
+                Đăng xuất
+              </button>
+            </div>
           </div>
         </div>
       </nav>

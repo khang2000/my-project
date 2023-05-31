@@ -5,7 +5,7 @@ const EditUser = (props) => {
   const text = { text: "Cập nhật" };
   return (
     <div>
-      <InputInfor user={props.user} text={text} />
+      <InputInfor user={props.user} text={text} updateUser={props.updateUser} />
     </div>
   );
 };
