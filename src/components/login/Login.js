@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const Login = () => {
-  const history = useNavigate();
   const [inpVal, setInpVal] = useState({
     email: "",
     password: "",
   });
-  const [data, setData] = useState([]);
   const getData = (e) => {
     const { value, name } = e.target;
     setInpVal(() => {
@@ -18,8 +16,6 @@ const Login = () => {
   };
   const addData = (e) => {
     e.preventDefault();
-    const getUserArr = localStorage.getItem("useryoutube");
-    console.log(getUserArr);
     const { email, password } = inpVal;
     if (email === "") {
       alert("fill your email");
@@ -30,19 +26,25 @@ const Login = () => {
     } else if (password.length < 5) {
       alert("password more than 5 characters");
     } else {
-      if (getUserArr && getUserArr.length) {
-        const userData = JSON.parse(getUserArr);
-        const userLogin = userData.filter((el, k) => {
-          return el.email === email && el.password === password;
-        });
-        if (userLogin.length === 0) {
-          alert("tài khoản hặc mật khẩu không chính xác");
+      const data = { email, password };
+      fetch("http://localhost:8080/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          mode: "login",
+        },
+        body: JSON.stringify(data),
+      }).then(async (res) => {
+        const data = await res.json();
+        console.log(data);
+        if (data && !data.message) {
+          console.log(data.token);
+          // eslint-disable-next-line no-restricted-globals
+          location.href = "/";
         } else {
-          console.log("userLogin successfully");
-          localStorage.setItem("user_login", JSON.stringify(getUserArr));
-          history("/");
+          alert("fault");
         }
-      }
+      });
     }
   };
   return (
@@ -81,7 +83,7 @@ const Login = () => {
           <p className="mt-3">
             Already Have an Account{" "}
             <span>
-              <Link to="/home">Đăng ký</Link>
+              <Link to="/register">Đăng ký</Link>
             </span>
           </p>
         </div>

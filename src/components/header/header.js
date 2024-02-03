@@ -5,7 +5,7 @@ const Header = () => {
   const history = useNavigate();
   const userLogout = () => {
     localStorage.removeItem("user_login");
-    history("/home");
+    history("/login");
   };
 
   return (

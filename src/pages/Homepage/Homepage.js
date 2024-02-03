@@ -5,7 +5,7 @@ import Main from "../../components/main/main";
 import HeaderTable from "./HeaderTable";
 import EditUser from "../../components/editUser/EditUser";
 import Header from "../../components/header/header";
-import Home from "../../components/home/home";
+// import Register from "../../components/register/Register";
 
 const Homepage = (props) => {
   const { users, onDeleteTodo, updateUser } = props;
@@ -50,10 +50,6 @@ const Homepage = (props) => {
   // PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
 
-  // const [recordsPerPage, setRecordsPerPage] = useState();
-  // const handleRecord = () => {
-  //   setRecordsPerPage(recordsPerPage.i);
-  // };
   const [recordsPerPage, setRecordsPerPage] = useState("3");
   const lastIndex = currentPage * recordsPerPage;
   const fisrtIndex = lastIndex - recordsPerPage;
@@ -74,94 +70,93 @@ const Homepage = (props) => {
   }
   return (
     <>
-      {loginData.length === 0 ? (
-        <Home />
-      ) : (
-        <div>
-          <Header />
+      <div>
+        <Header />
 
-          <div className="user">
-            <Nav />
-            <div className="nav">
-              <form>
-                <label for="user">Hiển thị</label>
-                <select onChange={handleSelect}>
-                  {option.map((option) => (
-                    <option value={option.value}>{option.label}</option>
-                  ))}
-                </select>
-              </form>
-
-              <form>
-                <input
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Tìm kiếm"
-                ></input>
-              </form>
-            </div>
-
-            <table
-              className={
-                isOpenModal
-                  ? "table table-striped class-example"
-                  : "table table-striped"
-              }
-            >
-              <HeaderTable />
-              {records
-                .filter((user) => {
-                  return search.toLowerCase() === ""
-                    ? user
-                    : user.userName.toLowerCase().includes(search);
-                })
-                .map((user, index) => {
-                  return (
-                    // .splice(ar.indexOf('one'), 1)
-                    <Main
-                      user={user}
-                      index={index}
-                      onDeleteTodo={onDeleteTodo}
-                      handleOpenModal={handleOpenModal}
-                    />
-                  );
-                })}
-            </table>
-            <nav>
-              <ul className="pagination">
-                <li className="page-item">
-                  <a href="#" className="page-link" onClick={prePage}>
-                    Prev
-                  </a>
-                </li>
-                {numbers.map((n, i) => (
-                  <li
-                    className={`page-item ${currentPage === n ? "active" : ""}`}
-                    key={i}
-                  >
-                    <a
-                      href="#"
-                      className="page-link"
-                      onClick={() => changeCPage(n)}
-                    >
-                      {n}
-                    </a>
-                  </li>
+        <div className="user">
+          <Nav />
+          <div className="nav">
+            <form>
+              <label for="user">Hiển thị</label>
+              <select onChange={handleSelect}>
+                {option.map((option) => (
+                  <option value={option.value}>{option.label}</option>
                 ))}
-                <li className="page-item">
-                  <a href="#" className="page-link" onClick={nextPage}>
-                    Next
+              </select>
+            </form>
+
+            <form>
+              <input
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Tìm kiếm"
+              ></input>
+            </form>
+          </div>
+
+          <table
+            className={
+              isOpenModal
+                ? "table table-striped class-example"
+                : "table table-striped"
+            }
+          >
+            <HeaderTable />
+            {records
+              .filter((user) => {
+                return search.toLowerCase() === ""
+                  ? user
+                  : user.userName.toLowerCase().includes(search);
+              })
+              .map((user, index) => {
+                return (
+                  <Main
+                    user={user}
+                    index={index}
+                    onDeleteTodo={onDeleteTodo}
+                    handleOpenModal={handleOpenModal}
+                  />
+                );
+              })}
+          </table>
+          <nav>
+            <ul className="pagination">
+              <li className="page-item">
+                <a href="#" className="page-link" onClick={prePage}>
+                  Prev
+                </a>
+              </li>
+              {numbers.map((n, i) => (
+                <li
+                  className={`page-item ${currentPage === n ? "active" : ""}`}
+                  key={i}
+                >
+                  <a
+                    href="#"
+                    className="page-link"
+                    onClick={() => changeCPage(n)}
+                  >
+                    {n}
                   </a>
                 </li>
-              </ul>
-            </nav>
-            {isOpenModal && (
-              <div className="center-screen">
-                <EditUser user={userDemo} updateUser={updateUser} />
-              </div>
-            )}
-          </div>
+              ))}
+              <li className="page-item">
+                <a href="#" className="page-link" onClick={nextPage}>
+                  Next
+                </a>
+              </li>
+            </ul>
+          </nav>
+          {isOpenModal && (
+            <div className="center-screen">
+              <EditUser
+                user={userDemo}
+                updateUser={updateUser}
+                handleOpenModal={handleOpenModal}
+              />
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </>
   );
   function prePage() {

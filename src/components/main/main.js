@@ -4,8 +4,7 @@ import { FaPencilAlt } from "react-icons/fa";
 import { FaTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 const Main = (props) => {
-  const { user, index, onDeleteTodo, handleOpenModal, handleOpenDetail } =
-    props;
+  const { user, index, onDeleteTodo, handleOpenModal } = props;
   const { id } = user;
   console.log("🚀 ~ file: main.js:8 ~ Main ~ onDeleteTodo:", onDeleteTodo);
   console.log("🚀 ~ file: main.js:8 ~ Main ~ index:", index);

@@ -58,3 +58,6 @@ i {
 .log-out {
   margin-right: 2px;
 }
+section {
+  justify-content: center;
+}

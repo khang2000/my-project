@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [inpVal, setInpVal] = useState({
-    name: "",
+    username: "",
     email: "",
     date: "",
     password: "",
   });
-  const [data, setData] = useState([]);
   const getData = (e) => {
     const { value, name } = e.target;
     setInpVal(() => {
@@ -18,12 +16,11 @@ const Home = () => {
       };
     });
   };
-  const history = useNavigate();
   const addData = (e) => {
     e.preventDefault();
-    const { name, email, date, password } = inpVal;
-    if (name === "") {
-      alert("fill your name");
+    const { username, email, date, password } = inpVal;
+    if (username === "") {
+      alert("fill your username");
     } else if (email === "") {
       alert("fill your email");
     } else if (!email.includes("@")) {
@@ -35,15 +32,29 @@ const Home = () => {
     } else if (password.length < 5) {
       alert("password more than 5 characters");
     } else {
-      console.log("successfully!");
-      localStorage.setItem("useryoutube", JSON.stringify([...data, inpVal]));
-      history("/login");
+      const data = { username, email, date, password };
+      fetch("http://localhost:8080/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          mode: "sign",
+        },
+        body: JSON.stringify(data),
+      }).then(async (res) => {
+        const mess = await res.json();
+        if (mess.message === "Creat successfully") {
+          // eslint-disable-next-line no-restricted-globals
+          location.href = "/login";
+        } else {
+          alert(mess.message);
+        }
+      });
     }
   };
   return (
     <div>
       <div className="container mt-3">
-        <section className="d-flex justify-content-center">
+        <section className="d-flex ">
           <div className="left-data mt-3" style={{ width: "100%" }}>
             <h3 className="text-center col-lg-6">Đăng ký</h3>
             <form>
@@ -54,7 +65,7 @@ const Home = () => {
                   className="form-control"
                   id="exampleInputEmail1"
                   onChange={getData}
-                  name="name"
+                  name="username"
                 />
               </div>
               <div className="mb-3 col-lg-6">

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const InputInfor = (props) => {
-  const { user, text } = props;
+  const { user, text, handleOpenModal } = props;
   const [inputValues, setInputValues] = useState({
     userName: user ? user.userName : "",
     userId: user ? user.id : "", // if(user) user.userName else ""
@@ -35,6 +35,7 @@ const InputInfor = (props) => {
       userAddressBorn: "",
       userImage: "",
     });
+    handleOpenModal();
   };
   return (
     <div>
@@ -131,7 +132,7 @@ const InputInfor = (props) => {
           />
         </div>
         <div className="col-12">
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary ">
             {text ? text.text : "Đăng ký"}
           </button>
         </div>
